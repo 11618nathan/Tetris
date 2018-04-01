@@ -10,6 +10,30 @@
 
 #include <time.h>
 
+int best_score = 0;
+int level = 0;
+int score = 0;
+int level_goal = 1000;
+int key = 0;
+int crush = 0;
+int cnt = 0;
+int speed = 1000;
+
+void reset_main();
+void draw_map();
+void draw_main();
+
+void block_type_next();
+void new_block();
+
+
+int main()
+{
+	title();
+	reset();
+
+}
+
 void gotoxy(int x, int y)
 {
 	COORD pos = { 2 * x,y };
@@ -44,8 +68,33 @@ void title(void)
 	puts("");
 }
 
-void main()
+void reset()
 {
-	title();
-}
+	FILE *file = fopen("score.dat", "rt");
 
+	if (file == 0)
+	{
+		best_score = 0;
+	}
+	else
+	{
+		fscanf(file, "%d", &best_score);
+		fclose(file);
+	}
+	level = 1;
+	score = 0;
+	level_goal = 1000;
+	key = 0;
+	crush = 0;
+	cnt = 0;
+	speed = 1000;
+
+	system("cls");
+
+	reset_main();
+	draw_map();
+	draw_main();
+
+	block_type_next = rand() % 7;
+	new_block();
+}
