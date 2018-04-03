@@ -91,7 +91,7 @@ typedef enum
 {
 	NOCURSOR, SOLIDCURSOR, NORMALCURSOR
 } CURSOR_TYPE;
-void setcursortype(CURSOR_TYPE C)
+void setcursortype(CURSOR_TYPE c)
 {
 	CONSOLE_CURSOR_INFO CurInfo;
 
