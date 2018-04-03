@@ -18,6 +18,12 @@
 #define BROAD_Y_W 1 //게임판 위치조정 
 
 
+#define ACTIVE_BLOCK -2
+#define CEILLING -1
+#define EMPTY 0
+#define WALL 1
+#define INACTIVE_BLOCK 2
+
 // 전역 변수
 int best_score = 0;
 int level = 0;
@@ -27,6 +33,13 @@ int key = 0;
 int crush = 0;
 int cnt = 0;
 int speed = 1000;
+
+// 보드 전역변수
+int main_org[BROAD_Y][BROAD_X];
+int main_cpy[BROAD_Y][BROAD_X];
+
+int sx, sy;
+int key;
 
 // 블록 전역 변수
 int block_type;
@@ -56,12 +69,45 @@ int blocks[7][4][4][4] = {
 	{ 0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0 },{ 0,0,0,0,0,1,0,0,1,1,0,0,0,1,0,0 } }
 };
 
+
+
 // 함수 정의부
+void title();
+void reset();
 void reset_main();
 void draw_map();
 void draw_main();
 void new_block();
-void new_block();
+void draw_main();
+
+// X,Y 좌표 지정 함수
+void gotoxy(int x, int y)
+{
+	COORD pos = { 2 * x,y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+
+typedef enum
+{
+	NOCURSOR, SOLIDCURSOR, NORMALCURSOR
+} CURSOR_TYPE;
+void setcursortype(CURSOR_TYPE C)
+{
+	CONSOLE_CURSOR_INFO CurInfo;
+
+	switch (c)
+	{
+	case NOCURSOR:
+		CurInfo.dwSize = 1;
+		CurInfo.bVisible = FALSE;
+		break;
+	case SOLIDCURSOR:
+		CurInfo.dwSize = 100;
+		CurInfo.b
+	default:
+		break;
+	}
+}
 
 
 // MAIN 함수
@@ -73,12 +119,7 @@ int main()
 }
 
 
-// X,Y 좌표 지정 함수
-void gotoxy(int x, int y)
-{
-	COORD pos = { 2 * x,y };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
-}
+
 
 
 // 시작 화면
@@ -149,4 +190,47 @@ void new_block()
 {
 	int i, j;
 	
+}
+
+void draw_main()
+{
+	int i = 0;
+	int j = 0;
+
+	for ( j = 1; j < BROAD_X - 1; j++)
+	{
+		if (main_org[3][j] = EMPTY)
+		{
+			main_org[3][j] = CEILLING;
+		}
+	}
+
+	for (i = 0; i < BROAD_Y; i++)
+	{
+		for (j = 0; j < BROAD_X; j++)
+		{
+			if (main_cpy[i][j] != main_org[i][j])
+			{
+				gotoxy(BROAD_X_W + j, BROAD_Y_W + i);
+				switch (main_org[i][j])
+				{
+				case EMPTY:
+					printf("  ");
+					break;
+				case CEILLING:
+					printf(". ");
+					break;
+				case WALL:
+					printf("▦");
+					break;
+				case INACTIVE_BLOCK: 
+					printf("□");
+					break;
+				case ACTIVE_BLOCK:
+					printf("■");
+					break;
+				}
+			}
+		}
+	}
 }
