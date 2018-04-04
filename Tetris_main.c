@@ -26,6 +26,7 @@
 
 // 전역 변수
 int best_score = 0;
+int last_score = 0;
 int level = 0;
 int score = 0;
 int level_goal = 1000;
@@ -79,6 +80,8 @@ void draw_map();
 void draw_main();
 void new_block();
 void draw_main();
+void check_game_over();
+
 
 // X,Y 좌표 지정 함수
 void gotoxy(int x, int y)
@@ -236,4 +239,39 @@ void draw_main()
 			}
 		}
 	}
+}
+
+void check_game_over()
+{
+	int i;
+	int x = 5;
+	int y = 5;
+
+	for (i = 0; i < BROAD_X; i++)
+	{
+		if (main_org[3][i] > 0)
+		{
+			gotoxy(x, y + 0); printf("□□□□□□□□□□□□□□□□□□□□□□□□□");
+			gotoxy(x, y + 1); printf("□■■■□■■■□■■■□■■■□■■■□■■■□");
+			gotoxy(x, y + 2); printf("□□■□□■□□□□■□□■□■□□■□□■□□□");
+			gotoxy(x, y + 3); printf("□□■□□■■■□□■□□■■■□□■□□■■■□");
+			gotoxy(x, y + 4); printf("□□■□□■□□□□■□□■□■□□■□□□□■□");
+			gotoxy(x, y + 5); printf("□□■□□■■■□□■□□■□■□■■■□■■■□");
+			gotoxy(x, y + 6); printf("□□□□□□□□□□□□□□□□□□□□□□□□□");
+			gotoxy(x, y + 7); printf("");
+			gotoxy(x + 5, y + 8); printf("G A M E O V E R");
+			gotoxy(x + 6, y + 8); printf("YOUR SCORE %6d", score);
+			gotoxy(x, y + 8); printf("Press any key to restart.");
+			gotoxy(x, y + 8); printf(" ");
+			gotoxy(x, y + 8); printf(" ");
+			gotoxy(x, y + 8); printf(" ");
+			last_score = score;
+
+			if (score > best_score)
+			{
+
+			}
+		}
+	}
+
 }
